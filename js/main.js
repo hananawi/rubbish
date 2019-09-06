@@ -28,42 +28,26 @@ export default class Main {
         this.rubbish_collected_cnt = 0;
         this.ind = 0;
         this.time_ind = 0;
-        this.start = false;
-        this.start2 = false;
+        this.state = 0;
 
         this.rubbish_arr = [];
 
         this.meg = new BackGround();
-        this.menu = new Menu();
         this.init();
     }
 
     init() {
         this.gameinfo = new GameInfo();
         this.pools = new Pool();
-
-        this.gamestartBind1 = this.gamestart1.bind(this);
-        this.gamestartBind2 = this.gamestart2.bind(this);
-        addEventListener("touchstart", this.gamestartBind1);
-        addEventListener("touchend", this.gamestartBind2);
+        this.rifa = new Player();
+        this.menu = new Menu();
+        this.help = new Help();
 
         this.loopBind = this.loop.bind(this);
         cancelAnimationFrame(this.aniId);
         this.aniId = requestAnimationFrame(this.loopBind);
 
 
-    }
-
-    gamestart1(e) {
-        var x = e.touches[0].clientX;
-        var y = e.touches[0].clientY;
-        if (x >= 100 && x <= 210 && y >= 270 && y <= 330) this.start2 = true;
-    }
-    gamestart2(e) {
-        if (this.start2) {
-            this.rifa = new Player();
-            this.start = true;
-        }
     }
 
     creat_rubbish() {
@@ -81,15 +65,33 @@ export default class Main {
     }
 
     update() {
-        if (!this.start) return;
-        removeEventListener("touchstart", this.gamestartBind1);
-        removeEventListener("touchend", this.gamestartBind2);
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        if(!this.state)this.state = this.menu.state;
+
+        if (!this.state)this.menu.render();
+
+        else if(this.state == 1){
+            this.menu = null;
+            this.rifa.flag = 1;
+            this.running();
+        }
+        else if(this.state == 2){
+            this.help.draww();
+            this.help.render(this.help.state);
+        }
+    }
+
+    running(){
+        this.meg.drawit();//background!!!  draw it first!!!
+        this.gameinfo.drawGameScore(ctx, this.score);
+        this.rifa.moveit(this.rifa.dir, this.rifa.fast);
+        this.rifa.draw(ctx);
 
         this.time_pass(this.time);
 
         this.time_cnt++;
 
-        if(this.time_cnt%10==0)this.time+=0.2;
+        if (this.time_cnt % 10 == 0) this.time += 0.2;
 
         if (this.time_cnt == 60) {
             this.creat_rubbish(this.ind);
@@ -132,26 +134,11 @@ export default class Main {
             }
             /////////////////////////////////////////////////////
         }
-
-        this.rifa.moveit(this.rifa.dir, this.rifa.fast);
-        this.rifa.draw(ctx);
-    }
-
-    render() {
-        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        if (!this.start) {
-            this.menu.render();
-            return;
-        }
-        this.meg.drawit();
-        this.gameinfo.drawGameScore(ctx, this.score);
-
     }
 
     loop() {
-        this.render();
         this.update();
-
+        if(!this.state)this.menu.draww();
         this.aniId = requestAnimationFrame(this.loopBind);
     }
 
