@@ -3,7 +3,7 @@ import Sprite from "../base/sprite"
 //const RIFA_SRC = "images/rifa.jpg"
 const RIFA_SRC = "it农场/分类桶和图标和头像/可回收垃圾垃圾桶.png"
 const RIFA_WIDTH = 150;
-const RIFA_HEIGHT = 150;
+const RIFA_HEIGHT = 230;
 const SCREEN_MIDX = window.innerWidth / 2;
 
 export default class Player extends Sprite {

@@ -32,7 +32,8 @@ export default class Menu extends Sprite {
 
     print(content, x, y, size) {
         ctx.fillStyle = "#e84393";
-        ctx.font = "bold " + size + "px Arial"
+        //ctx.font = "bold " + size + "px Arial"
+        ctx.font = "bold " + size + "px 方正汉真广标"
         ctx.fillText(content, x, y);
     }
 
