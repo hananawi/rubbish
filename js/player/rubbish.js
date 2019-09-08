@@ -21,7 +21,7 @@ export default class Rubbish extends Sprite{
 		else if(this.type == 3)this.name += "未可回收/";
 		else this.name += "有害垃圾/";
 
-		this.ind = Math.ceil(Math.random()*6);
+		this.ind = Math.floor(Math.random()*16);
 
 		this.img.src = this.name + this.ind + ".png";
 	}
