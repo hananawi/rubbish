@@ -63,6 +63,10 @@ export default class Help {
     render(x) {
         ctx.fillStyle = "rgb(211, 229, 251)"
         ctx.fillRect(0, 0, WIDTH, HEIGHT)
+
+        ctx.fillStyle = "#e84393"
+        ctx.font = "bold 20px Arial"
+        ctx.fillText("返回", 50, 70)
         switch (x) {
             case 0:
                 this.render0();
