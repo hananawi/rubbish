@@ -1,6 +1,7 @@
 import Running from "./runtime/running.js"
 import Menu from "./runtime/menu.js"
 import Help from "./runtime/help.js"
+import Intro from "./runtime/intro.js"
 
 const RIFA_SRC = "images/rifa.jpg"
 const MEG_SRC = "images/megumin.jpg"
@@ -16,41 +17,64 @@ function print(content) {
 
 export default class Main {
     constructor() {
-        this.aniId = 0;
-
+        this.aniId = 0
         this.init();
     }
 
     init() {
-        this.running = new Running();
-        this.menu = new Menu();
-        this.help = new Help();
+        this.running = new Running()
+        this.menu = new Menu()
+        this.help = new Help()
+        this.intro = new Intro()
 
         this.loopBind = this.loop.bind(this);
-        cancelAnimationFrame(this.aniId);
-        this.aniId = requestAnimationFrame(this.loopBind);
+        this.aniId = window.requestAnimationFrame(this.loopBind)
     }
 
     update() {
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        if(!this.state)this.state = this.menu.state;
+        this.menu.f=this.help.f=this.intro.f = this.running.setting.f=false
 
-        if (!this.state)this.menu.render();
+        if (!this.menu.state) {
+            this.menu.f = true
+            this.menu.render()
+            this.menu.check()
+        }
 
-        else if(this.state == 1){
-            this.menu = null;
+        if (this.menu.state == 1) {
+            this.running.setting.f=true
             this.running.rifa.flag = 1;
             this.running.per_frame();
+            if (this.running.setting.state == 3) {
+                this.init()
+                cancelAnimationFrame(this.aniId);
+                return
+            }
         }
-        else if(this.state == 2){
-            this.help.draww();
+         else if (this.menu.state == 2) {
+            this.help.f=true
             this.help.render(this.help.state);
+            this.help.draww();
+            this.help.check()
+            if(this.help.state==-1){
+                this.menu.state=0
+                this.help.state = 0
+            }
         }
+        else if(this.menu.state == 3){
+            this.intro.f = true
+            this.intro.render()
+            this.intro.draww()
+            this.intro.check()
+            if(!this.intro.f){
+                this.menu.state = 0
+            }
+        }
+        console.log(this.menu.state)
     }
 
     loop() {
         this.update();
-        this.aniId = requestAnimationFrame(this.loopBind);
+        this.aniId = requestAnimationFrame(this.loopBind)
     }
-
 }

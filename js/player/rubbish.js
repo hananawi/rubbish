@@ -6,7 +6,7 @@ const RUBBISH_WIDTH = 50;
 const RUBBISH_HEIGHT = 50;
 
 
-
+var ctx = canvas.getContext('2d')
 export default class Rubbish extends Sprite{
 	constructor(idx){
 		super(RUBBISH_SRC,0,60,RUBBISH_WIDTH,RUBBISH_HEIGHT);
@@ -25,4 +25,10 @@ export default class Rubbish extends Sprite{
 
 		this.img.src = this.name + this.ind + ".png";
 	}
+
+    render(){
+        this.draw()
+        ctx.strokeStyle = "red"
+        ctx.strokeRect(this.x,this.y,this.width,this.height)
+    }
 }

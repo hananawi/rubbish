@@ -1,5 +1,5 @@
 import Sprite from "../base/sprite.js"
-
+import Button from "../base/button.js"
 
 const SRC = "it农场/界面/开始界面背景.png";
 const WIDTH = innerWidth;
@@ -9,7 +9,7 @@ var ctx = canvas.getContext("2d");
 export default class Menu extends Sprite {
     constructor() {
         super(SRC, 0, 0, WIDTH, HEIGHT);
-        this.debug = 0;
+        this.f = false
 
         this.state = 0;
         this.flag = 0;
@@ -20,7 +20,24 @@ export default class Menu extends Sprite {
             this.coor[i] = y;
             y += HEIGHT / 7;
         }
-        this.initEvent();
+
+        this.buttons = [];
+        var i = 0
+        for (i = 0; i < 3; i++)
+            this.buttons.push(new Button(WIDTH / 3.2, this.coor[i], 120, 35))
+    }
+
+    check() {
+        if (!this.f) return
+        var i = 0
+        for (i = 0; i < 3; i++){
+            this.buttons[i].f = true
+            if (this.buttons[i].state) {
+                this.state = i + 1
+                this.buttons[i].cao()
+                return
+            }
+        }
     }
 
     render() {
@@ -35,36 +52,6 @@ export default class Menu extends Sprite {
         //ctx.font = "bold " + size + "px Arial"
         ctx.font = "bold " + size + "px 方正汉真广标"
         ctx.fillText(content, x, y);
-    }
-
-    initEvent() {
-        addEventListener("touchstart", ((e) => {
-            var x = e.touches[0].clientX;
-            var y = e.touches[0].clientY;
-
-            var i = 0;
-            for (i = 0; i < 3; i++) {
-                if (!(x >= WIDTH/3.2 && x <= WIDTH+120)) return;
-                if (y >= this.coor[i] && y <= this.coor[i] + 35) this.flag = i + 1;
-            }
-        }).bind(this))
-
-        addEventListener("touchmove", ((e) => {
-            var x = e.touches[0].clientX;
-            var y = e.touches[0].clientY;
-
-            this.debug = y;
-
-            if (!(x >= WIDTH/3.2 && x <= WIDTH+120)) {
-                this.flag = 0;
-                return;
-            }
-            if (!(y >= this.coor[this.flag - 1] && y <= this.coor[this.flag - 1] + 35)) this.flag = 0;
-        }).bind(this))
-
-        addEventListener("touchend", ((e) => {
-            this.state = this.flag;
-        }).bind(this))
     }
 
     draww() {

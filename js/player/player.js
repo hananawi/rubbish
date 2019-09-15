@@ -4,7 +4,6 @@ import Sprite from "../base/sprite"
 const RIFA_SRC = "it农场/分类桶和图标和头像/可回收垃圾垃圾桶.png"
 const RIFA_WIDTH = 150;
 const RIFA_HEIGHT = 230;
-const SCREEN_MIDX = window.innerWidth / 2;
 
 export default class Player extends Sprite {
     constructor() {
@@ -21,7 +20,7 @@ export default class Player extends Sprite {
             //e.preventDefault();
             if(!this.flag)return;
             var x = e.touches[0].clientX;
-            if (x > SCREEN_MIDX) this.dir = 1;
+            if (x > this.x+this.width/2) this.dir = 1;
             else this.dir = -1;
         }).bind(this))
 
@@ -54,32 +53,3 @@ export default class Player extends Sprite {
         this.x = x;
     }
 }
-
- /*
-	initEvent(ctx){
-		canvas.addEventListener('touchstart',((e) => {
-			e.preventDefault();
-			var x = e.touches[0].clientX;
-			var y = e.touches[0].clientY;
-			if(this.istouched(x,y)){
-				this.touched = true;
-				this.moveit(x,y);
-			}
-		}).bind(this))
- 		canvas.addEventListener("touchmove",((e)=>{
-			e.preventDefault();
-			var x = e.touches[0].clientX;
-			var y = e.touches[0].clientY;
-			if(this.touched)
-				this.moveit(x,y);
- 			this.wx = x;
-			this.wy = y;
-			//this.print(ctx,x,200,200);
-			//this.print(ctx,y,300,200);
-		}).bind(this))
- 		canvas.addEventListener("touchend", ((e) => {
-			e.preventDefault();
-			this.touched = false;
-		}).bind(this))
-	}
- */
