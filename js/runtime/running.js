@@ -1,6 +1,7 @@
 import Player from "../player/player.js"
 import Rubbish from "../player/rubbish.js"
 import Setting from "../runtime/setting.js"
+import Button from "../base/button.js"
 
 const WIDTH = innerWidth;
 const HEIGHT = innerHeight;
@@ -16,12 +17,10 @@ const C = [
 var ctx = canvas.getContext("2d");
 
 
-export default class Running{
-    constructor(){
+export default class Running {
+    constructor() {
         this.rifa = new Player();
         this.setting = new Setting()
-
-        this.state = 0
 
         this.score = 0;
         this.streak = 0;
@@ -42,8 +41,9 @@ export default class Running{
         this.init();
     }
 
-    init(){
-        var i = 0, j = 0;
+    init() {
+        var i = 0,
+            j = 0;
         for (i = 0; i < 4; i++) {
             var tmp = [];
             for (j = 0; j < 3; j++) {
@@ -52,19 +52,21 @@ export default class Running{
             }
             this.step.push(tmp);
         }
-        
+
         for (i = 0; i < 4; i++) {
             var tmp = new Image();
-            tmp.src = "it农场/分类桶和图标和头像/图标" + (i + 1) + ".png";
+            tmp.src = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/it%E5%86%9C%E5%9C%BA/%E5%88%86%E7%B1%BB%E6%A1%B6%E5%92%8C%E5%9B%BE%E6%A0%87%E5%92%8C%E5%A4%B4%E5%83%8F/图标" + (i + 1) + ".png";
             P.push(tmp);
         }
 
-        for(i=0;i<3;i++)
-            this.bulbs.push(WIDTH/2+WIDTH/8*i)
+        for (i = 0; i < 3; i++)
+            this.bulbs.push(WIDTH / 2 + WIDTH / 8 * i)
+
+        this.game_over = new Button(WIDTH / 2, HEIGHT / 2, 100, 30)
     }
 
-    per_frame(){
-        this.draw_bg(this.color);//////////////////////////////////////
+    per_frame() {
+        this.draw_bg(this.color); //////////////////////////////////////
 
         this.draw_bulb(this.streak)
         this.setting.render()
@@ -74,93 +76,101 @@ export default class Running{
 
         this.setting.check()
         this.drop()
-        if(this.setting.state)return
+        if (this.setting.state) return
+        if (this.game_over.f) return
         this.update()
     }
 
-    draw_score(){
+    draw_score() {
         ctx.fillStyle = "black";
         ctx.font = "800 30px Impact";
         ctx.fillText(this.score, 25, 40);
     }
 
-    draw_timebar(){
+    draw_timebar() {
+        if (this.time_x >= 150) {
+            this.game_over.f = true
+            this.print("游戏结束", this.game_over.x, this.game_over.y)
+            this.game_over.draww()
+        }
+        if(this.time_x<=0)this.time_x = 0
         ctx.fillStyle = "#34495e";
-        ctx.fillRect(150, 43, 150-this.time_x,3);
+        ctx.fillRect(150, 43, 150 - this.time_x, 3);
     }
 
-    draw_bg(c){
-        ctx.fillStyle = "rgb("+c[0]+','+c[1]+','+c[2]+')';
-        ctx.fillRect(0,0,WIDTH,HEIGHT);
-        ctx.drawImage(P[this.coloridx],WIDTH/2-50,HEIGHT/2-50,100,100);
+    draw_bg(c) {
+        ctx.fillStyle = "rgb(" + c[0] + ',' + c[1] + ',' + c[2] + ')';
+        ctx.fillRect(0, 0, WIDTH, HEIGHT);
+        ctx.drawImage(P[this.coloridx], WIDTH / 2 - 50, HEIGHT / 2 - 50, 100, 100);
     }
 
-    update(){
+    draw_bulb(x) {
+        ctx.fillStyle = "red"
+        ctx.strokeStyle = "red"
+        var i = 0
+        for (i = 0; i < 3; i++)
+            ctx.strokeRect(this.bulbs[i], HEIGHT / 8.5, 30, 30)
+        for (i = 0; i < x; i++)
+            ctx.fillRect(this.bulbs[i], HEIGHT / 8.5, 30, 30)
+    }
+
+    update() {
         this.rifa.moveit(this.rifa.dir, this.rifa.fast);
+        this.time_x += 0.05
         if (this.time % 60 == 0 && this.time) {
-            this.time_x += 0.2;
             this.rubbish_arr.push(new Rubbish(this.idx))
             this.idx++;
         }
-        if (this.time >= 600) {
+        if (this.time >= 1200) {
             var i = 0;
             for (i = 0; i < 3; i++) {
                 this.color[i] += this.step[this.coloridx][i];
             }
         }
-        if (this.time == 660) {
+        if (this.time == 1260) {
             this.time = -1;
             this.coloridx = (this.coloridx + 1) % 4;
+            this.streak = 0
         }
         this.time++;
     }
 
-    drop(){
-        var i = 0,len = this.rubbish_arr.length;
-        for(i = 0;i<len;i++){
+    drop() {
+        var i = 0,
+            len = this.rubbish_arr.length;
+        for (i = 0; i < len; i++) {
             var tmp = this.rubbish_arr[i];
-            if(tmp.type==this.type)tmp.render()
+            if (tmp.type == this.coloridx + 1) tmp.render()
             else tmp.draw()
-            //tmp.draw()
-            //tmp.render()
-            if(this.setting.state)continue
-            tmp.y+=3;
+            if (this.setting.state || this.game_over.f) continue
+            tmp.y += 3;
 
-///////////////////////////////////////////////////////////////////////////////////
-            if(this.rifa.isCollideWith(tmp)){
-                if (!this.type || this.type == tmp.type) this.streak++;
-                else this.streak = 1;
-                this.type = tmp.type;
+            ///////////////////////////////////////////////////////////////////////////////////
+            if (this.rifa.isCollideWith(tmp)) {
+                if (this.coloridx + 1 == tmp.type) this.streak++
+                else this.streak = 0
                 if (this.streak == 3) {
                     this.type = 0;
                     this.streak = 0;
                     this.score++;
+                    this.time_x -= 80
                 }
 
-                this.rubbish_arr.splice(tmp.idx-this.collected_cnt,1);
-                tmp = null;
-                this.collected_cnt++;
-                i--;len--;
-            }
-////////////////////////////////////////////////////////////////////////////////////
-
-            else if (tmp.y > HEIGHT){
                 this.rubbish_arr.splice(tmp.idx - this.collected_cnt, 1);
                 tmp = null;
                 this.collected_cnt++;
-                i--; len--;
+                i--;
+                len--;
+            }
+            ////////////////////////////////////////////////////////////////////////////////////
+            else if (tmp.y > HEIGHT) {
+                this.rubbish_arr.splice(tmp.idx - this.collected_cnt, 1);
+                tmp = null;
+                this.collected_cnt++;
+                i--;
+                len--;
             }
         }
-    }
-
-    draw_bulb(x){
-        ctx.fillStyle = "red"
-        ctx.strokeStyle = "red"
-        var i=0
-        for(i=0;i<3;i++)
-            ctx.strokeRect(this.bulbs[i],HEIGHT/8.5,30,30)
-        for(i=0;i<x;i++)
-            ctx.fillRect(this.bulbs[i],HEIGHT/8.5,30,30)
     }
 
     print(content, x, y) {

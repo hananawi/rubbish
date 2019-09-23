@@ -33,7 +33,7 @@ export default class Main {
 
     update() {
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        this.menu.f=this.help.f=this.intro.f = this.running.setting.f=false
+        this.menu.f = this.help.f = this.intro.f = this.running.setting.f = false
 
         if (!this.menu.state) {
             this.menu.f = true
@@ -42,35 +42,32 @@ export default class Main {
         }
 
         if (this.menu.state == 1) {
-            this.running.setting.f=true
+            this.running.setting.f = true
             this.running.rifa.flag = 1;
             this.running.per_frame();
-            if (this.running.setting.state == 3) {
+            if (this.running.setting.state == 3 || this.running.game_over.state == 1) {
+                this.running.game_over.cao()
                 this.init()
                 cancelAnimationFrame(this.aniId);
                 return
             }
-        }
-         else if (this.menu.state == 2) {
-            this.help.f=true
-            this.help.render(this.help.state);
-            this.help.draww();
+        } else if (this.menu.state == 2) {
+            this.help.f = true
+            this.help.render(this.help.state)
             this.help.check()
-            if(this.help.state==-1){
-                this.menu.state=0
+            if (this.help.state == -1) {
+                this.menu.state = 0
                 this.help.state = 0
             }
-        }
-        else if(this.menu.state == 3){
+        } else if (this.menu.state == 3) {
             this.intro.f = true
             this.intro.render()
             this.intro.draww()
             this.intro.check()
-            if(!this.intro.f){
+            if (!this.intro.f) {
                 this.menu.state = 0
             }
         }
-        console.log(this.menu.state)
     }
 
     loop() {

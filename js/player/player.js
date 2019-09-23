@@ -1,9 +1,9 @@
 import Sprite from "../base/sprite"
 
 //const RIFA_SRC = "images/rifa.jpg"
-const RIFA_SRC = "it农场/分类桶和图标和头像/可回收垃圾垃圾桶.png"
-const RIFA_WIDTH = 150;
-const RIFA_HEIGHT = 230;
+const RIFA_SRC = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/it%E5%86%9C%E5%9C%BA/%E5%88%86%E7%B1%BB%E6%A1%B6%E5%92%8C%E5%9B%BE%E6%A0%87%E5%92%8C%E5%A4%B4%E5%83%8F/%E5%8F%AF%E5%9B%9E%E6%94%B6%E5%9E%83%E5%9C%BE%E5%9E%83%E5%9C%BE%E6%A1%B6.png"
+const RIFA_WIDTH = 100;
+const RIFA_HEIGHT = 160;
 
 export default class Player extends Sprite {
     constructor() {

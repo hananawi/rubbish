@@ -1,7 +1,7 @@
 import Sprite from "../base/sprite.js"
 import Button from "../base/button.js"
 
-const SRC = "it农场/界面/开始界面背景.png";
+const SRC = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/it%E5%86%9C%E5%9C%BA/%E7%95%8C%E9%9D%A2/%E5%BC%80%E5%A7%8B%E7%95%8C%E9%9D%A2%E8%83%8C%E6%99%AF.png?sign=84730e54b06d0e9e04f005373999a889&t=1569050641";
 const WIDTH = innerWidth;
 const HEIGHT = innerHeight;
 

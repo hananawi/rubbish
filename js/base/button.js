@@ -1,3 +1,6 @@
+
+var ctx = canvas.getContext('2d')
+
 export default class Button {
     constructor(x, y, width, height) {
         this.x = x
@@ -28,6 +31,11 @@ export default class Button {
         addEventListener('touchend', ((e) => {
             this.state = this.flag
         }).bind(this))
+    }
+
+    draww(){
+        ctx.strokeStyle = "red"
+        ctx.strokeRect(this.x, this.y, this.width, this.height)
     }
 
     cao(){
