@@ -151,6 +151,7 @@ export default class Help {
                 this.std = 0
             } else if (!this.state) {
                 this.state = -1
+                this.f = false
             }
             this.back.cao()
         }

@@ -1,4 +1,3 @@
-
 var ctx = canvas.getContext('2d')
 
 export default class Button {
@@ -13,7 +12,7 @@ export default class Button {
         this.f = false
 
         addEventListener('touchstart', ((e) => {
-            if(!this.f)return
+            if (!this.f) return
             var x = e.touches[0].clientX
             var y = e.touches[0].clientY
 
@@ -33,12 +32,12 @@ export default class Button {
         }).bind(this))
     }
 
-    draww(){
+    draww() {
         ctx.strokeStyle = "red"
         ctx.strokeRect(this.x, this.y, this.width, this.height)
     }
 
-    cao(){
-        this.flag = this.state = false
+    cao() {
+        this.f = this.flag = this.state = false
     }
 }

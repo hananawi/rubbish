@@ -37,7 +37,7 @@ export default class Setting extends Sprite {
 
     print(content, x, y) {
         ctx.fillStyle = "#e84393"
-        ctx.font = "bold 30px Arial"
+        ctx.font = "bold 30px cursive"
         ctx.fillText(content, x, y)
     }
 

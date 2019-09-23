@@ -68,6 +68,7 @@ export default class Main {
                 this.menu.state = 0
             }
         }
+        console.log(this.menu.state)
     }
 
     loop() {

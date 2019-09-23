@@ -2,6 +2,7 @@ import Player from "../player/player.js"
 import Rubbish from "../player/rubbish.js"
 import Setting from "../runtime/setting.js"
 import Button from "../base/button.js"
+import Help from "../runtime/help.js"
 
 const WIDTH = innerWidth;
 const HEIGHT = innerHeight;
@@ -62,7 +63,7 @@ export default class Running {
         for (i = 0; i < 3; i++)
             this.bulbs.push(WIDTH / 2 + WIDTH / 8 * i)
 
-        this.game_over = new Button(WIDTH / 2, HEIGHT / 2, 100, 30)
+        this.game_over = new Button(0,0,WIDTH,HEIGHT)
     }
 
     per_frame() {
@@ -71,14 +72,29 @@ export default class Running {
         this.draw_bulb(this.streak)
         this.setting.render()
         this.draw_score();
-        this.draw_timebar();
+
         this.rifa.draw(ctx);
 
         this.setting.check()
         this.drop()
-        if (this.setting.state) return
+        this.draw_timebar();
         if (this.game_over.f) return
+        if (this.setting.state) {
+            if(this.setting.state == 2)this.draw_help()
+            return
+        }
         this.update()
+    }
+
+    draw_help(){
+        if(!this.help)this.help = new Help()
+        this.help.f = true
+        this.help.render(this.help.state)
+        this.help.check()
+        if (this.help.state == -1) {
+            this.setting.state = 0
+            this.help.state = 0
+        }
     }
 
     draw_score() {
@@ -90,10 +106,13 @@ export default class Running {
     draw_timebar() {
         if (this.time_x >= 150) {
             this.game_over.f = true
-            this.print("游戏结束", this.game_over.x, this.game_over.y)
-            this.game_over.draww()
+            //this.print("游戏结束", this.game_over.x, this.game_over.y)
+            var tmp = new Image()
+            tmp.src = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/it%E5%86%9C%E5%9C%BA/GameOver.png?sign=7e20bbc41f019a57809085d2bf6c7512&t=1569249036"
+            ctx.drawImage(tmp, 0, 0, WIDTH, HEIGHT)
+            //this.game_over.draww()
         }
-        if(this.time_x<=0)this.time_x = 0
+        if (this.time_x <= 0) this.time_x = 0
         ctx.fillStyle = "#34495e";
         ctx.fillRect(150, 43, 150 - this.time_x, 3);
     }
@@ -148,7 +167,7 @@ export default class Running {
             ///////////////////////////////////////////////////////////////////////////////////
             if (this.rifa.isCollideWith(tmp)) {
                 if (this.coloridx + 1 == tmp.type) this.streak++
-                else this.streak = 0
+                    else this.streak = 0
                 if (this.streak == 3) {
                     this.type = 0;
                     this.streak = 0;
