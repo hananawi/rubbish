@@ -14,36 +14,14 @@ var gap = 4.1,
 
 function print(content, i) {
     const bgg = canvas.getContext('2d') // 创建一个 2d context
+    //bgg.shadowColor = 'black';
     bgg.fillStyle = '#FFFFFF' // 矩形颜色
+    /*bgg.shadowColor = 'black';
+    bgg.shadowBlur=10;
+    bgg.shadowOffsetX=5;
+    bgg.shadowOffsetY = 5;*/
     bgg.fillRect((WIDTH / 3.2) - 5, (HEIGHT / gap + HEIGHT / step * i) - 25, 120, 35);
     bgg.beginPath();
-    //bgg.StrokeStyle('transparent');
-    // 因为边缘描边存在锯齿，最好指定使用 transparent 填充
-    // 这里是使用 fill 还是 stroke都可以，二选一即可
-    //bgg.setFillStyle('transparent')
-    // ctx.setStrokeStyle('transparent')
-    //左上角
-    /*bgg.arc = ((WIDTH / 3.2) - 5 + r, (HEIGHT / gap + HEIGHT / step * i) - 25 + r, r , Math.PI, Math.PI*1.5);
-    bgg.moveTo((WIDTH / 3.2) - 5 + r, (HEIGHT / gap + HEIGHT / step * i) - 25);
-    bgg.lineTo((WIDTH / 3.2) - 5 + 120 -r, (HEIGHT / gap + HEIGHT / step * i) - 25);
-    bgg.lineTo((WIDTH / 3.2) - 5 + 120 , (HEIGHT / gap + HEIGHT / step * i) - 25 + r);
-    //右上角
-    bgg.arc = ((WIDTH / 3.2) - 5 + 120 - r , (HEIGHT / gap + HEIGHT / step * i) - 25 + r, r, Math.PI * 1.5, Math.PI * 2);
-    bgg.lineTo((WIDTH / 3.2) - 5 + 120, (HEIGHT / gap + HEIGHT / step * i) - 25 +35 - r);
-    bgg.lineTo((WIDTH / 3.2) - 5 + 120 - r, (HEIGHT / gap + HEIGHT / step * i) - 25 + 35);
-    //右下角
-    bgg.arc = ((WIDTH / 3.2) - 5 + 120 - r, (HEIGHT / gap + HEIGHT / step * i) - 25 + 35 - r, r, 0, Math.PI * 0.5);
-    bgg.lineTo((WIDTH / 3.2) - 5 +  r, (HEIGHT / gap + HEIGHT / step * i) - 25 + 35);
-    bgg.lineTo((WIDTH / 3.2) - 5 , (HEIGHT / gap + HEIGHT / step * i) - 25 + 35 -r);
-    //左下角
-    bgg.arc = ((WIDTH / 3.2) - 5 + r, (HEIGHT / gap + HEIGHT / step * i) - 25 + 35 - r , r, Math.PI * 0.5, Math.PI);
-    bgg.lineTo((WIDTH / 3.2) - 5 , (HEIGHT / gap + HEIGHT / step * i) - 25 + r);
-    bgg.lineTo((WIDTH / 3.2) - 5 + r, (HEIGHT / gap + HEIGHT / step * i) - 25);*/
-    //阴影
-    /*bgg.ShadowOffsetX = 10;
-    bgg.ShadowOffsetY = 10;
-    bgg.ShadowBulr = 10;
-    bgg.ShadowColor = "red";*/
     bgg.moveTo((WIDTH / 3.2) - 5 + r, (HEIGHT / gap + HEIGHT / step * i) - 25);
     bgg.arcTo((WIDTH / 3.2) - 5 + 120, (HEIGHT / gap + HEIGHT / step * i) - 25, (WIDTH / 3.2) - 5 + 120, (HEIGHT / gap + HEIGHT / step * i) - 25 + 35, r);
     bgg.arcTo((WIDTH / 3.2) - 5 + 120, (HEIGHT / gap + HEIGHT / step * i) - 25 + 35, (WIDTH / 3.2) - 5, (HEIGHT / gap + HEIGHT / step * i) - 25 + 35, r);
@@ -80,7 +58,7 @@ export default class Help {
             if (!i) this.buttons.push(new Button(WIDTH / 3.2, this.coor[i], 120, 35))
         else this.buttons.push(new Button(WIDTH / 3.2, this.coor[i], 120, 35))
 
-        this.back = new Button(50, 30, 40, 20)
+        this.back = new Button(20, 20, 40, 20)
 
         this.std = 0
         this.initEvent()
@@ -128,16 +106,16 @@ export default class Help {
         var name = '';
         switch (j) {
             case 1:
-                name = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/it%E5%86%9C%E5%9C%BA/%E5%9E%83%E5%9C%BE/%E6%9C%AA%E5%8F%AF%E5%9B%9E%E6%94%B6/";
+            name = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/%E5%9E%83%E5%9C%BE/%E5%8F%AF%E5%9B%9E%E6%94%B6%E5%9E%83%E5%9C%BE/";
                 break;
             case 2:
-                name = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/it%E5%86%9C%E5%9C%BA/%E5%9E%83%E5%9C%BE/%E5%B9%B2%E5%9E%83%E5%9C%BE/";
+            name = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/%E5%9E%83%E5%9C%BE/%E5%B9%B2%E5%9E%83%E5%9C%BE/";
                 break;
             case 3:
-                name = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/it%E5%86%9C%E5%9C%BA/%E5%9E%83%E5%9C%BE/%E6%B9%BF%E5%9E%83%E5%9C%BE/";
+            name = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/%E5%9E%83%E5%9C%BE/%E6%B9%BF%E5%9E%83%E5%9C%BE/";
                 break;
             case 4:
-                name = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/it%E5%86%9C%E5%9C%BA/%E5%9E%83%E5%9C%BE/%E6%9C%89%E5%AE%B3%E5%9E%83%E5%9C%BE/";
+            name = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/%E5%9E%83%E5%9C%BE/%E6%9C%89%E5%AE%B3%E5%9E%83%E5%9C%BE/";
                 break;
         }
         a.src = name + i + '.png';
@@ -191,7 +169,11 @@ export default class Help {
         }
         ctx.fillStyle = "#e84393"
         ctx.font = "bold 20px Arial"
-        ctx.fillText("返回", 50, 50)
+      const b = canvas.getContext('2d')
+      var backPicture = new Image()
+      backPicture.src = '返回2.png'
+      b.drawImage(backPicture, 20, 10, 50, 50)
+        //ctx.fillText("返回", 20, 10)
     }
 
     render1() {

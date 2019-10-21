@@ -1,7 +1,7 @@
 import Sprite from "../base/sprite.js"
 import Button from "../base/button.js"
 
-const SRC = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/it%E5%86%9C%E5%9C%BA/%E7%95%8C%E9%9D%A2/%E5%BC%80%E5%A7%8B%E7%95%8C%E9%9D%A2%E8%83%8C%E6%99%AF.png?sign=84730e54b06d0e9e04f005373999a889&t=1569050641";
+const SRC = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/%E5%BC%80%E5%A7%8B%E7%95%8C%E9%9D%A2%E8%83%8C%E6%99%AF.png?sign=82c10234f6e7fe1da514cb48d1efa6d5&t=1571626164";
 const WIDTH = innerWidth;
 const HEIGHT = innerHeight;
 
@@ -52,6 +52,14 @@ export default class Menu extends Sprite {
         //ctx.font = "bold " + size + "px Arial"
         ctx.font = "bold " + size + "px 方正汉真广标"
         ctx.fillText(content, x, y);
+        this.ijk=false
+        if(!this.ijk){
+          ctx.shadowColor = 'black';
+          ctx.shadowBlur = 10;
+          ctx.shadowOffsetX = 5;
+          ctx.shadowOffsetY = 5;
+          this.ijk=true
+        }
     }
 
     draww() {

@@ -1,7 +1,7 @@
 import Sprite from "../base/sprite.js"
 import Button from "../base/button.js"
 
-const SRC = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/it%E5%86%9C%E5%9C%BA/%E7%95%8C%E9%9D%A2/setting.png?sign=7c2589e06f6120b277b00278e607e146&t=1569050599"
+const SRC = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/setting.png?sign=90a50d177bcb6a9c06e4bbb86cdbbd02&t=1571626032"
 const WIDTH = innerWidth
 const HEIGHT = innerHeight
 

@@ -30,7 +30,10 @@ export default class Running {
         this.time_x = 0;
 
         this.coloridx = 0;
-        this.color = C[0];
+        this.color = [];
+        this.color[0] = C[0][0]
+        this.color[1] = C[0][1]
+        this.color[2] = C[0][2]
         this.step = [];
 
         this.rubbish_arr = [];
@@ -50,13 +53,13 @@ export default class Running {
             for (j = 0; j < 3; j++) {
                 if (i != 3) tmp.push((C[i + 1][j] - C[i][j]) / 60);
                 else tmp.push((C[0][j] - C[3][j]) / 60);
-            }
+            }``
             this.step.push(tmp);
         }
 
         for (i = 0; i < 4; i++) {
             var tmp = new Image();
-            tmp.src = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/it%E5%86%9C%E5%9C%BA/%E5%88%86%E7%B1%BB%E6%A1%B6%E5%92%8C%E5%9B%BE%E6%A0%87%E5%92%8C%E5%A4%B4%E5%83%8F/图标" + (i + 1) + ".png";
+          tmp.src = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/%E5%9E%83%E5%9C%BE%E6%A1%B6/%E5%9B%BE%E6%A0%87" + (i + 1) + ".png";
             P.push(tmp);
         }
 
@@ -98,9 +101,9 @@ export default class Running {
     }
 
     draw_score() {
-        ctx.fillStyle = "black";
-        ctx.font = "800 30px Impact";
-        ctx.fillText(this.score, 25, 40);
+      ctx.fillStyle = "white";
+        ctx.font = "800 60px";
+        ctx.fillText(this.score, 25, 50);
     }
 
     draw_timebar() {
@@ -108,17 +111,18 @@ export default class Running {
             this.game_over.f = true
             //this.print("游戏结束", this.game_over.x, this.game_over.y)
             var tmp = new Image()
-            tmp.src = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/it%E5%86%9C%E5%9C%BA/GameOver.png?sign=7e20bbc41f019a57809085d2bf6c7512&t=1569249036"
+          tmp.src = "https://696d-image-tj86e-1300283647.tcb.qcloud.la/GameOver.png?sign=d6ac118bfc5ae84f709263203939d81a&t=1571626786"
             ctx.drawImage(tmp, 0, 0, WIDTH, HEIGHT)
             //this.game_over.draww()
         }
         if (this.time_x <= 0) this.time_x = 0
-        ctx.fillStyle = "#34495e";
+      ctx.fillStyle = "#00a0ff";
         ctx.fillRect(150, 43, 150 - this.time_x, 3);
     }
 
     draw_bg(c) {
-        ctx.fillStyle = "rgb(" + c[0] + ',' + c[1] + ',' + c[2] + ')';
+        ctx.fillStyle = 'rgb(' + this.color[0] + ',' + this.color[1] + ',' + this.color[2] + ')';
+        //ctx.fillStyle = 'rgb(' + C[this.coloridx][0] + ',' + C[this.coloridx][1] + ',' + C[this.coloridx][2] + ')';
         ctx.fillRect(0, 0, WIDTH, HEIGHT);
         ctx.drawImage(P[this.coloridx], WIDTH / 2 - 50, HEIGHT / 2 - 50, 100, 100);
     }
@@ -127,10 +131,11 @@ export default class Running {
         ctx.fillStyle = "red"
         ctx.strokeStyle = "red"
         var i = 0
-        for (i = 0; i < 3; i++)
-            ctx.strokeRect(this.bulbs[i], HEIGHT / 8.5, 30, 30)
+      const b = canvas.getContext('2d')
+      var backPicture = new Image()
+      backPicture.src = 'https://696d-image-tj86e-1300283647.tcb.qcloud.la/%E5%BE%97%E5%88%86.png?sign=4a6975b4df0cccc44bb903e44b5c1e79&t=1571626131'
         for (i = 0; i < x; i++)
-            ctx.fillRect(this.bulbs[i], HEIGHT / 8.5, 30, 30)
+            ctx.drawImage(backPicture, this.bulbs[i], HEIGHT / 8.5, 32, 30)
     }
 
     update() {
